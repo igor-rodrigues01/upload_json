@@ -85,6 +85,8 @@ class Upload():
 
         print('{} Records Inserted.'.format(count)) 
 
+def regexp(value):
+    return re.search(r'[^\w]+',value)
 
 def check_params(params):
     length_input  = len(params)
@@ -92,19 +94,23 @@ def check_params(params):
 
     while counter < length_input:
         if params[counter] == '--table' or params[counter] == '-table':
-            # result = re.findall(r'[\d]',params[counter + 1])
-            if not isinstance(params[counter + 1],int):
+            result = regexp(params[counter + 1])
+            if not result:
                 TABLE = params[counter + 1]
 
         elif params[counter] == '--host' or params[counter] == '-host':
-            if isinstance(params[counter + 1],str):
+            result = regexp(params[counter + 1])
+            if not result:
                 HOST = params[counter + 1]
         
         elif params[counter] == '--db' or params[counter] == '-db':
-            DATABASE = params[counter + 1]
+            result = regexp(params[counter + 1])
+            if not result:
+                DATABASE = params[counter + 1]
         
         elif params[counter] == '--user' or params[counter] == '-user':
-            if isinstance(params[counter + 1],str):
+            result = regexp(params[counter + 1])
+            if not result:
                 USER = params[counter + 1]
         
         elif params[counter] == '--pass' or params[counter] == '-pass':
